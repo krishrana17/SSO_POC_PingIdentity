@@ -1,0 +1,33 @@
+﻿@using System.Security.Claims
+@using PingOne_Sample.App_Start
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    
+    @if (User.Identity.IsAuthenticated)
+    {
+        var userName = (User.Identity as ClaimsIdentity).GetClaimValue("preferred_username");
+
+        <p>Click Sign Off to switch users.</p>
+
+        <ul class="nav navbar-nav navbar-left">
+            <li>
+                <p class="navbar-text">Hello, <b>@userName</b></p>
+            </li>
+            <li>@Html.ActionLink("View claims", "Claims", "Account")</li>
+            <li>
+                @Html.ActionLink("Log out", "Logout", "Account")
+            </li>
+        </ul>
+       
+    }
+    else
+    {
+        <p>You are not currently authenticated. Click Sign On to get started.</p>
+        <div class="form-group">
+            @Html.ActionLink("Log in", "Login", "Account")
+        </div>
+    }
+</div>
